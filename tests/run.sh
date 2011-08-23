@@ -12,6 +12,5 @@ fi
 cd `dirname "$0"`
 
 exec "$phpunit" \
-        --bootstrap bootstrap.php \
         --configuration phpunit.xml \
         "$@"

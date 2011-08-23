@@ -1,5 +1,6 @@
-<phpunit bootstrap="./application/bootstrap.php" colors="true">
-	<testsuite name="Project">
+<phpunit bootstrap="./bootstrap.php" colors="true">
+    <!-- Default test suite: run all tests -->
+	<testsuite>
 		<directory>./</directory>
 	</testsuite>
 </phpunit>
