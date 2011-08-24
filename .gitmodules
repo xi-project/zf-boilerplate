@@ -1,0 +1,3 @@
+[submodule "external/zend-framework"]
+	path = external/zend-framework
+	url = https://github.com/xi-project/zend-framework
