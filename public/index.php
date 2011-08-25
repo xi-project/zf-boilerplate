@@ -7,7 +7,7 @@ defined('APPLICATION_PATH')
     || define('APPLICATION_PATH',
               realpath(__DIR__ . '/../application'));
 
-// Define application environment
+// Define application environment (possible values defined by configuration)
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
 
