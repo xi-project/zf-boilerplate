@@ -1,2 +1,5 @@
 # Netbeans project folder
 nbproject
+
+# Local application configuration file
+application/configs/application.ini
