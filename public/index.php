@@ -1,4 +1,6 @@
 <?php
+// Maximum level error reporting by default
+error_reporting(E_ALL | E_STRICT);
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -18,6 +20,13 @@ set_include_path(implode(PATH_SEPARATOR, array(
     realpath(__DIR__ . '/../library'),
 )));
 
+// Convert errors to RuntimeExceptions
+set_error_handler(function($type, $message, $file, $line) {
+    if ($type & error_reporting()) {
+        throw new RuntimeException($message, $type);
+    }
+});
+
 require_once 'Xi/Zend/Application/Application.php';
 
 try {
@@ -36,7 +45,7 @@ try {
 
     if (APPLICATION_ENV != 'production') {
         echo '<p>You are most likely missing application.ini. ' .
-             'Make it from application.example.ini</p>' .
+             'Copy it over from application.example.ini to get started.</p>' .
              '<p>(There might also be a parse error.)</p>';
         echo '<pre>' . $e . '</pre>';
     }
