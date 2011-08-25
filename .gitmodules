@@ -7,3 +7,6 @@
 [submodule "external/xi-zend-mvc"]
 	path = external/xi-zend-mvc
 	url = git@github.com:xi-project/xi-zend-mvc.git
+[submodule "external/xi-doctrine"]
+	path = external/xi-doctrine
+	url = git@github.com:xi-project/xi-doctrine.git
