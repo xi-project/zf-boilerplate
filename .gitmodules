@@ -4,3 +4,6 @@
 [submodule "external/xi-zend-application"]
 	path = external/xi-zend-application
 	url = git@github.com:xi-project/xi-zend-application.git
+[submodule "external/xi-zend-mvc"]
+	path = external/xi-zend-mvc
+	url = git@github.com:xi-project/xi-zend-mvc.git
