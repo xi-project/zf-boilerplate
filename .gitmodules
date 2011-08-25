@@ -1,3 +1,6 @@
 [submodule "external/zend-framework"]
 	path = external/zend-framework
 	url = https://github.com/xi-project/zend-framework
+[submodule "external/xi-zend-application"]
+	path = external/xi-zend-application
+	url = git@github.com:xi-project/xi-zend-application.git
