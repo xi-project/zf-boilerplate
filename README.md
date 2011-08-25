@@ -38,11 +38,11 @@ You, reader, are expected to be a professional developer. Professionals make sur
 
 Writing these tests is up to you, but once you have any, we've got the bare minimum laid out for you to run them. You will get a  barebones unit test bootstrap with ´/tests/bootstrap.php´. It sets up an autoloader, the include path and notches error reporting up to maximum. ´/tests/phpunit.xml´ will serve to configure your PHPUnit runs if you wish to do so (code coverage reports? Yes we can!). To run PHPUnit tests:
 
-  cd tests
-  phpunit
+    cd tests
+    phpunit
 
 Wow, that was difficult. In case you don't have a `phpunit` executable in your path but _do_ have a Zend Server installation, you can instead use:
 
-  sh run.sh <arguments>
+    sh run.sh <arguments>
 
 Extra arguments will be passed on to phpunit, but you won't usually need any.
