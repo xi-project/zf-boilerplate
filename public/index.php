@@ -7,6 +7,11 @@ defined('APPLICATION_PATH')
     || define('APPLICATION_PATH',
               realpath(__DIR__ . '/../application'));
 
+// Define path to application data directory
+defined('DATA_PATH')
+    || define('DATA_PATH',
+              realpath(__DIR__ . '/../data'));
+
 // Define application environment (possible values defined by configuration)
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
