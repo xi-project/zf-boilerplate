@@ -1,29 +1,27 @@
 <?php
-/**
- * Maximum level error reporting
- */
 error_reporting(E_ALL | E_STRICT);
 
-/**
- * Get both the test and library directories in the include path
- */
-set_include_path(dirname(__DIR__) . '/library' . PATH_SEPARATOR . __DIR__ . PATH_SEPARATOR . get_include_path());
+define('APPLICATION_PATH', realpath(__DIR__ . '/../application'));
+define('DATA_PATH', realpath(__DIR__ . '/../data'));
+define('APPLICATION_ENV', 'testing');
+define('APPLICATION_CONFIG_CACHE', 'none');
 
-/**
- * Register a trivial autoloader
- */
-spl_autoload_register(function($class) {
-    $filename = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class) . '.php';
-    foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
-        if (file_exists($includePath . DIRECTORY_SEPARATOR . $filename)) {
-            include_once $filename;
-            break;
-        }
-    }
-    return class_exists($class, false);
-});
+set_include_path(
+    dirname(__DIR__) . '/library' . PATH_SEPARATOR .
+    __DIR__ . '/library' . PATH_SEPARATOR .
+    get_include_path()
+);
 
-/**
- * Set default time zone
- */
-date_default_timezone_set('Europe/Helsinki');
+require_once 'Xi/Zend/Application/Application.php';
+
+$application = new Xi\Zend\Application\Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini',
+    array(
+        'type' => APPLICATION_CONFIG_CACHE,
+        'key'  => __FILE__ . '/' . APPLICATION_ENV . '/config'
+    )
+);
+$application->bootstrap();
+
+$application->getAutoloader()->pushAutoloader(array(new \Doctrine\Common\ClassLoader(null, __DIR__ . '/library'), 'loadClass'));

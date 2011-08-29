@@ -1,6 +1,11 @@
 <phpunit bootstrap="./bootstrap.php" colors="true">
     <!-- Default test suite: run all tests -->
-	<testsuite>
-		<directory>./</directory>
-	</testsuite>
+    <testsuites>
+        <testsuite name="application">
+            <directory>application</directory>
+        </testsuite>
+        <testsuite name="acceptance">
+            <file>acceptance/AcceptanceTestSuite.php</file>
+        </testsuite>
+    </testsuites>
 </phpunit>

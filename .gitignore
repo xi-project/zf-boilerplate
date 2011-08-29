@@ -1,5 +1,9 @@
 # Netbeans project folder
-nbproject
+/nbproject
 
 # Local application configuration file
-application/configs/application.ini
+/application/configs/application.ini
+
+# Documentation generated from tests
+/doc/features
+
