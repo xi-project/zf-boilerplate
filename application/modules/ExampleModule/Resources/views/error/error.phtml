@@ -1,1 +1,5 @@
-<p>Something went wrong.</p>
+<?php if ($this->exception): ?>
+    <pre class="exception"><?php echo $this->exception; ?></pre>
+<?php else: ?>
+    <p>Something went wrong.</p>
+<?php endif; ?>
