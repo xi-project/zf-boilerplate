@@ -10,3 +10,6 @@
 [submodule "external/xi-doctrine"]
 	path = external/xi-doctrine
 	url = git@github.com:xi-project/xi-doctrine.git
+[submodule "external/Sham"]
+	path = external/Sham
+	url = git://github.com/anttih/Sham.git
