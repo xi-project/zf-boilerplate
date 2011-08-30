@@ -7,3 +7,6 @@
 # Documentation generated from tests
 /doc/features
 
+# SQLite databases
+/data/*.sqlite3
+

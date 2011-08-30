@@ -24,4 +24,6 @@ $application = new Xi\Zend\Application\Application(
 );
 $application->bootstrap();
 
-$application->getAutoloader()->pushAutoloader(array(new \Doctrine\Common\ClassLoader(null, __DIR__ . '/library'), 'loadClass'));
+\Zend_Registry::set('testApplication', $application);
+
+$application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, __DIR__ . '/library'), 'loadClass'));

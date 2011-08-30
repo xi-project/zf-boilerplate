@@ -27,4 +27,25 @@ class ExampleServiceTest extends \TestCase
         $msg = $this->service->getGreeting();
         $this->assertEquals('!', $msg[strlen($msg) - 1]);
     }
+    
+    /**
+     * @test
+     */
+    public function canGreetUsers()
+    {
+        $user = new \UserAccount('john');
+        $this->assertEquals("Hello john!", $this->service->getGreetingForUser($user));
+    }
+    
+    /**
+     * @test
+     */
+    public function canGreetUsersById()
+    {
+        // Testing that Doctrine works
+        $user = new \UserAccount('john');
+        $this->em->persist($user);
+        $this->em->flush();
+        $this->assertEquals("Hello john!", $this->service->getGreetingForUserById($user->getId()));
+    }
 }

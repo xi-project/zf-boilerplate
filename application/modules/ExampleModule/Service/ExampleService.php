@@ -1,7 +1,7 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleService
+class ExampleService extends AbstractService
 {
     protected $greeting = 'Hello';
     
@@ -13,5 +13,16 @@ class ExampleService
     public function getGreeting()
     {
         return $this->greeting . '!';
+    }
+    
+    public function getGreetingForUser(\UserAccount $user)
+    {
+        return $this->greeting . ' ' . $user->getUsername() . '!';
+    }
+    
+    public function getGreetingForUserById($userId)
+    {
+        $user = $this->em->getRepository('UserAccount')->find($userId);
+        return $this->getGreetingForUser($user);
     }
 }
