@@ -1,9 +1,11 @@
 <?php
 namespace ExampleModule\Controller;
 
-class IndexController extends \Zend_Controller_Action
+use Xi\Zend\Mvc\ActionController\StatefulActionController;
+
+class IndexController extends StatefulActionController
 {
-    public function indexAction()
+    public function indexActionGet()
     {
         
     }
