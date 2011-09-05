@@ -27,3 +27,5 @@ $application->bootstrap();
 \Zend_Registry::set('testApplication', $application);
 
 $application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, __DIR__ . '/library'), 'loadClass'));
+$application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, dirname(__DIR__) . '/library'), 'loadClass'));
+$application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, APPLICATION_PATH . '/library'), 'loadClass'));

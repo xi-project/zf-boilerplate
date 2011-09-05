@@ -6,7 +6,9 @@ class ExampleServiceTest extends \TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->service = new ExampleService();
+        $sl = \Sham::create('\ExampleModule\Service\ExampleServiceLocator');
+        $sl->getEntityManager->returns($this->em);
+        $this->service = new ExampleService($sl);
     }
     
     /**

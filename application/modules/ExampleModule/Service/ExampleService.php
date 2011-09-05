@@ -1,7 +1,7 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleService extends AbstractService
+class ExampleService extends \Xi\Zend\Mvc\Service\AbstractService
 {
     protected $greeting = 'Hello';
     
