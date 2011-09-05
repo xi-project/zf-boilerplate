@@ -40,7 +40,7 @@ class TestDb
     {
         $conn = $this->getEntityManager()->getConnection();
         foreach ($this->getEntityManager()->getMetadataFactory()->getAllMetadata() as $metadata) {
-            $conn->exec("TRUNCATE " . $metadata->getQuotedTableName($metadata->getTableName()) . ";");
+            $conn->exec("DELETE FROM " . $metadata->getQuotedTableName($metadata->getTableName()));
         }
     }
     

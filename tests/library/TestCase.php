@@ -20,6 +20,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         parent::setUp();
         
         $this->testDb = TestDb::get();
+        $this->testDb->clearAllTables();
         $this->em = $this->testDb->recreateEntityManager();
     }
 }
