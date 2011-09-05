@@ -3,5 +3,5 @@
 <p><?php echo $this->greeting; ?></p>
 
 <p>
-    <code>My baseUrl is <?php echo $this->baseUrl() ?></code>
+    <code><?php echo $this->translate('My baseUrl is "%s"', $this->baseUrl()); ?></code>
 </p>
