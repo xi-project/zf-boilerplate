@@ -1,11 +1,16 @@
 #!/bin/bash
 
-# default binary location (from Zend Server)
-phpunit=/usr/local/zend/bin/phpunit
+ZEND_SERVER_PHPUNIT=/usr/local/zend/bin/phpunit
 
-# possible to use a custom location using an environment variable
 if [ -n "$PHPUNIT" ]; then
     phpunit="$PHPUNIT"
+elif [ -n "`which phpunit`" ]; then
+    phpunit=phpunit
+elif [ -x "$ZEND_SERVER_PHPUNIT" ]; then
+    phpunit="$ZEND_SERVER_PHPUNIT"
+else
+    echo "PHPUnit not found. Please install it and make sure it's on your PATH."
+    exit 1
 fi
 
 # run the tests, passing all given arguments to phpunit

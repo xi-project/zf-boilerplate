@@ -1,6 +1,13 @@
 #!/usr/bin/env watchr
+
+puts
+puts "NOTE: watchr only runs the tests under tests/application."
+puts "Use `tests/watchr` while developing on the unit level."
+puts "Use `tests/run.sh` manually to run all tests, including the slow acceptance tests."
+puts "Use `tests/run.sh --filter SlowTestName` to debug an acceptance test."
+
 def run_phpunit
-    system('echo; echo; echo; echo; cd tests/ ; phpunit')
+    system('echo; echo; echo; echo; cd tests/ ; phpunit application')
 end
 
 Dir.chdir(File.dirname(File.dirname(__FILE__)))
