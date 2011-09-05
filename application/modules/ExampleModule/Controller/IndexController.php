@@ -9,5 +9,6 @@ class IndexController extends StatefulActionController
     {
         $exampleService = new \ExampleModule\Service\ExampleService($this->getServiceLocator());
         $this->view->greeting = $exampleService->getGreeting();
+        $this->view->userCount = $exampleService->getUserCount();
     }
 }

@@ -50,4 +50,16 @@ class ExampleServiceTest extends \TestCase
         $this->em->flush();
         $this->assertEquals("Hello john!", $this->service->getGreetingForUserById($user->getId()));
     }
+    
+    /**
+     * @test
+     */
+    public function canCountUsersInDatabase()
+    {
+        $this->em->persist(new \UserAccount('john'));
+        $this->em->persist(new \UserAccount('jill'));
+        $this->em->persist(new \UserAccount('jack'));
+        $this->em->flush();
+        $this->assertEquals(3, $this->service->getUserCount());
+    }
 }

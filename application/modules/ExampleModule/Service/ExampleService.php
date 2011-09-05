@@ -25,4 +25,9 @@ class ExampleService extends \Xi\Zend\Mvc\Service\AbstractService
         $user = $this->em->getRepository('UserAccount')->find($userId);
         return $this->getGreetingForUser($user);
     }
+    
+    public function getUserCount()
+    {
+        return count($this->em->getRepository('UserAccount')->findAll());
+    }
 }

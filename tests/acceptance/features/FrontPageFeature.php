@@ -21,9 +21,6 @@
 
 <ul>
     <li>
-        Get Doctrine to work in unit tests. In-memory sqlite should work.
-    </li>
-    <li>
         Get Doctrine to work in acceptance tests. Needs a persistent database because Selenium invokes a server.
     </li>
     <li>
