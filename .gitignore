@@ -7,6 +7,9 @@
 # Documentation generated from tests
 /doc/features
 
+# The selenium server jar
+/external/selenium-server-*.jar
+
 # SQLite databases
 /data/*.sqlite3
 

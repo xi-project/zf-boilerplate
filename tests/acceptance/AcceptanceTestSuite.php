@@ -7,6 +7,8 @@ class AcceptanceTestSuite
     
     public static function suite()
     {
+        static::verifySeleniumServerJar();
+        
         static::$srcDir = __DIR__ . '/features';
         static::$destDir = APPLICATION_PATH . '/../doc/features';
         static::nukeDestDir(static::$destDir);
@@ -36,5 +38,25 @@ class AcceptanceTestSuite
     protected static function copyOver($what)
     {
         system("cp -R " . escapeshellarg(static::$srcDir . '/' . $what) . ' ' . escapeshellarg(static::$destDir . '/' . $what));
+    }
+    
+    protected static function verifySeleniumServerJar()
+    {
+        $version = "2.5.0";
+        $filename = "selenium-server-standalone-$version.jar";
+        $expectedPath = APPLICATION_PATH . "/../external/$filename";
+        $downloadUrl = "http://selenium.googlecode.com/files/$filename";
+        
+        if (!file_exists($expectedPath)) {
+            echo "Selenium server JAR not present. Trying to download it.\n";
+            echo "From: $downloadUrl\n";
+            echo "To:   $expectedPath\n";
+            $command =
+                    "curl -# -o " .
+                    escapeshellarg($expectedPath) . ' ' .
+                    escapeshellarg($downloadUrl);
+            echo "$command\n";
+            system($command);
+        }
     }
 }
