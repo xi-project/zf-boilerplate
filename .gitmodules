@@ -13,3 +13,6 @@
 [submodule "external/Sham"]
 	path = external/Sham
 	url = git://github.com/anttih/Sham.git
+[submodule "external/Pimple"]
+	path = external/Pimple
+	url = git://github.com/fabpot/Pimple.git
