@@ -1,6 +1,8 @@
 <h1><?php echo $this->helloWorld() ?></h1>
 
-<p><?php echo $this->greeting; ?></p>
+<p><?php echo $this->escape($this->greeting); ?></p>
+
+<p>There are <?php echo $this->userCount; ?> users in the database.</p>
 
 <p>
     <code><?php echo $this->translate('My baseUrl is "%s"', $this->baseUrl()); ?></code>

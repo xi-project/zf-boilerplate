@@ -9,6 +9,14 @@ class AcceptanceTestCase extends TestCase
     private $nextScreenshotNum = 1;
     
     /**
+     * The baseUrl of the acceptance test installation.
+     */
+    public function baseUrl()
+    {
+        return \Zend_Registry::get('testApplication')->getOption('acceptanceTestingBaseUrl');
+    }
+    
+    /**
      * Use this function to take screenshots, automatically save them to the
      * correct place and get an <img> tag as a return value.
      */
@@ -22,8 +30,15 @@ class AcceptanceTestCase extends TestCase
         $path = $basePath . '/' . $filename;
         $this->nextScreenshotNum += 1;
         $this->webdriver->getScreenshotAndSaveToFile($path);
-        return '<img src="screenshots/' . $filename . '" alt="(screenshot)" />';
+        return '<img src="screenshots/' . $filename . '" alt="(screenshot)" class="screenshot" />';
     }
+    
+    public function highlight($jquerySelector)
+    {
+        $this->webdriver->executeScript("$('$jquerySelector').addClass('acceptance-test-highlighted')", array());
+    }
+    
+    //TODO: list more. Can has traits?
     
     
     ////////////////////
@@ -40,7 +55,8 @@ class AcceptanceTestCase extends TestCase
      */
     protected $webdriver;
     
-    public function __construct($srcFile, $destFile, $layoutFile, ExtendedWebDriver $webdriver) {
+    public function __construct($srcFile, $destFile, $layoutFile, ExtendedWebDriver $webdriver)
+                {
         $this->srcFile = $srcFile;
         $this->destFile = $destFile;
         $this->layoutFile = $layoutFile;
@@ -48,17 +64,20 @@ class AcceptanceTestCase extends TestCase
         parent::__construct(basename($srcFile, '.phtml'));
     }
     
-    public function count() {
+    public function count()
+    {
         return 1;
     }
     
-    public function run(PHPUnit_Framework_TestResult $result = null) {
+    public function run(PHPUnit_Framework_TestResult $result = null)
+    {
         if ($result === null) {
             $result = new PHPUnit_Framework_TestResult;
         }
         
         $result->startTest($this);
         PHP_Timer::start();
+        $this->setUp();
 
         try {
             $this->webdriver->execute('window.resizeTo(800, 600)', array());
@@ -73,6 +92,7 @@ class AcceptanceTestCase extends TestCase
             $result->addError($this, $e, PHP_Timer::stop());
         }
 
+        $this->tearDown();
         $result->endTest($this, PHP_Timer::stop());
  
         return $result;

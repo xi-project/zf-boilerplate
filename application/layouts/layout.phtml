@@ -3,8 +3,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title></title>
+        
+        <?php /* TODO: use assetic and a local jquery: */ ?>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+        <?php if (APPLICATION_ENV == 'testing'): ?>
+            <link rel="stylesheet" type="text/css" href="css/highlighting.css" />
+        <?php endif; ?>
     </head>
     <body>
         <?php echo $this->layout()->content; ?>
+        <?php if (APPLICATION_ENV == 'testing'): ?>
+            <div id="acceptance-test-mode" style="float: right; font-size: 8pt; color: gray;">Running in acceptance testing mode.</div>
+        <?php endif; ?>
     </body>
 </html>

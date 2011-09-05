@@ -6,33 +6,35 @@
 </p>
 
 <p>
-    An acceptance test is a combination of documentation and test code describing a single feature of the system.
-    The test is often a Selenium browser-based test, which gives the possiblity of screenshots such as the one below.
+    An acceptance test is a combination of documentation and test code
+    describing a single feature of the system.
+    The test is often a Selenium browser-based test,
+    which gives the possiblity of screenshots such as the one below.
 </p>
 
 <?php
-$webdriver->get('http://www.google.com/');
-echo $this->screenshot();
+    $webdriver->get($this->baseUrl() . '/');
+    $this->assertTrue(strpos($webdriver->getPageSource(), "acceptance testing mode") !== false);
+    echo $this->screenshot();
 ?>
 
 <p>
-    These tests can work as simple version-controller HTML TODO lists as well.
+    The baseURL configured for acceptance testing is currently
+    <code><?php echo $this->baseUrl(); ?></code>, which is where the above
+    page was loaded from.
+</p>
+
+<p>
+    We can even conveniently highlight parts of the screenshot.
+</p>
+
+<?php
+    $this->highlight('#acceptance-test-mode');
+    echo $this->screenshot();
+?>
+
+<p>
+    These tests can work as simple version-controlled HTML TODO lists as well.
     Just specify a feature here as text (and perhaps some mockups) and
     gradually change it to a test as things get implemented.
 </p>
-
-<h2>TODO</h2>
-
-<ul>
-    <li>
-        Get Doctrine to work in acceptance tests. Needs a persistent database because Selenium invokes a server.
-    </li>
-    <li>
-        Make the test setup as painless as possible. Since we'll depend on Node.js anyway, maybe use <a href="https://github.com/davidcoallier/node-php">node-php</a> or something.
-    </li>
-    <li>
-        Properly evaluate and maybe fork
-        <a href="https://github.com/chibimagic/WebDriver-PHP/">this</a>
-        (or maybe <a href="http://code.google.com/p/php-webdriver-bindings/downloads/detail?name=php-webdriver-bindings-0.7.0.zip&can=2&q=">this</a>).
-    </li>
-</ul>

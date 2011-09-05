@@ -46,3 +46,19 @@ Wow, that was difficult. In case you don't have a `phpunit` executable in your p
     sh run.sh <arguments>
 
 Extra arguments will be passed on to phpunit, but you won't usually need any.
+
+Also, see https://bas.fi/how-to-test/ .
+
+## Setting up acceptance tests
+
+Acceptance tests run with APPLICATION_ENV=testing. They need a separate vhost and a separate database. The database can be configured in `application.ini`, but the vhost must be configured manually.
+
+    <VirtualHost *:80>
+        ServerName NAME-OF-PROJECT.localhost
+        DocumentRoot /PATH/TO/PROJECT/public
+        SetEnv APPLICATION_ENV testing
+    </VirtualHost>
+
+Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost
+and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini`
+(under testing).

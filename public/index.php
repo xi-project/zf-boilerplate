@@ -14,7 +14,7 @@ defined('DATA_PATH')
 
 // Define application environment (possible values defined by configuration)
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
+    || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'development');
 
 // Define application config cache (possible values: 'array', 'apc', 'none')
 defined('APPLICATION_CONFIG_CACHE')

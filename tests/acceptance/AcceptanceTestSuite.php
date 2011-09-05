@@ -28,7 +28,8 @@ class AcceptanceTestSuite
         foreach ($testFiles as $file) {
             if (basename($file) !== 'layout.phtml') {
                 $destFile = static::$destDir . '/' . basename($file, '.phtml') . '.html';
-                $suite->addTest(new AcceptanceTestCase($file, $destFile, $layoutFile, $webdriver));
+                $case = new AcceptanceTestCase($file, $destFile, $layoutFile, $webdriver);
+                $suite->addTest($case);
             }
         }
         return $suite;
