@@ -1,3 +1,4 @@
+<?php $webdriver = ExtendedWebDriver::typehint($this->webdriver); ?>
 <h1>Front page</h1>
 
 <p>
@@ -9,7 +10,10 @@
     The test is often a Selenium browser-based test, which gives the possiblity of screenshots such as the one below.
 </p>
 
-<div>TODO: screenshot</div>
+<?php
+$webdriver->get('http://www.google.com/');
+echo $this->screenshot();
+?>
 
 <p>
     These tests can work as simple version-controller HTML TODO lists as well.

@@ -2,15 +2,50 @@
 
 class AcceptanceTestCase extends TestCase
 {
+    ///////////////////////////////////////
+    ///// $this-> interface for tests /////
+    ///////////////////////////////////////
+    
+    private $nextScreenshotNum = 1;
+    
+    /**
+     * Use this function to take screenshots, automatically save them to the
+     * correct place and get an <img> tag as a return value.
+     */
+    public function screenshot()
+    {
+        $basePath = APPLICATION_PATH . '/../doc/features/screenshots';
+        if (!file_exists($basePath)) {
+            mkdir($basePath);
+        }
+        $filename = $this->getName() . '-' . $this->nextScreenshotNum . '.png';
+        $path = $basePath . '/' . $filename;
+        $this->nextScreenshotNum += 1;
+        $this->webdriver->getScreenshotAndSaveToFile($path);
+        return '<img src="screenshots/' . $filename . '" alt="(screenshot)" />';
+    }
+    
+    
+    ////////////////////
+    ///// Plumbing /////
+    ////////////////////
+    
+    
     protected $srcFile;
     protected $destFile;
     protected $layoutFile;
     
-    public function __construct($srcFile, $destFile, $layoutFile) {
+    /**
+     * @var ExtendedWebDriver
+     */
+    protected $webdriver;
+    
+    public function __construct($srcFile, $destFile, $layoutFile, ExtendedWebDriver $webdriver) {
         $this->srcFile = $srcFile;
         $this->destFile = $destFile;
         $this->layoutFile = $layoutFile;
-        parent::__construct(basename($srcFile, '.php'));
+        $this->webdriver = $webdriver;
+        parent::__construct(basename($srcFile, '.phtml'));
     }
     
     public function count() {
@@ -21,14 +56,17 @@ class AcceptanceTestCase extends TestCase
         if ($result === null) {
             $result = new PHPUnit_Framework_TestResult;
         }
- 
+        
         $result->startTest($this);
         PHP_Timer::start();
 
         try {
+            $this->webdriver->execute('window.resizeTo(800, 600)', array());
+            
             $output = $this->runFileGetOutput($this->srcFile);
             $output = $this->wrapInLayout($output);
             file_put_contents($this->destFile, $output);
+            
         } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $result->addFailure($this, $e, PHP_Timer::stop());
         } catch (Exception $e) {
