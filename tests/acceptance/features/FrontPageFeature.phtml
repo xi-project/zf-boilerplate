@@ -25,12 +25,20 @@
 </p>
 
 <p>
+    Now we'll make changes to the test database behind the scenes and
+    see that they become visible in the browser.
     We can even conveniently highlight parts of the screenshot.
 </p>
 
 <?php
+    $user = new \UserAccount('Jannejussiperttupietari');
+    $this->em->persist($user);
+    $this->em->flush();
+    $webdriver->refresh();
+    $this->highlight('#user-count');
     $this->highlight('#acceptance-test-mode');
     echo $this->screenshot();
+    $this->assertTrue(strpos($webdriver->findElementBy(LocatorStrategy::cssSelector, '#user-count')->getText(), '1 user') !== false);
 ?>
 
 <p>
