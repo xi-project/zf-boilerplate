@@ -19,3 +19,6 @@
 [submodule "external/php-webdriver-bindings"]
 	path = external/php-webdriver-bindings
 	url = git://github.com/xi-project/php-webdriver-bindings.git
+[submodule "external/xi-test-selenium"]
+	path = external/xi-test-selenium
+	url = git@github.com:xi-project/xi-test-selenium.git
