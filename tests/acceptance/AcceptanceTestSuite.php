@@ -1,5 +1,9 @@
 <?php
 
+use \Xi\Test\Selenium\SeleniumServer,
+    \Xi\Test\Selenium\WebDriver,
+    \Xi\Test\Selenium\PHPUnit\WebDriverInjectingTestDecorator;
+
 class AcceptanceTestSuite
 {
     protected static $srcDir;
@@ -12,10 +16,6 @@ class AcceptanceTestSuite
     
     public static function suite()
     {
-        static::verifySeleniumServerJar();
-        static::loadWebdriverBindings();
-        $webdriver = static::createWebDriver();
-        
         static::$srcDir = __DIR__ . '/features';
         static::$destDir = APPLICATION_PATH . '/../doc/features';
         static::nukeDestDir(static::$destDir);
@@ -28,51 +28,21 @@ class AcceptanceTestSuite
         foreach ($testFiles as $file) {
             if (basename($file) !== 'layout.phtml') {
                 $destFile = static::$destDir . '/' . basename($file, '.phtml') . '.html';
-                $case = new AcceptanceTestCase($file, $destFile, $layoutFile, $webdriver);
+                $case = new AcceptanceTestCase($file, $destFile, $layoutFile);
                 $suite->addTest($case);
             }
         }
-        return $suite;
-    }
-    
-    protected static function verifySeleniumServerJar()
-    {
-        $version = "2.5.0";
-        $filename = "selenium-server-standalone-$version.jar";
-        $expectedPath = APPLICATION_PATH . "/../external/$filename";
-        $downloadUrl = "http://selenium.googlecode.com/files/$filename";
         
-        if (!file_exists($expectedPath)) {
-            echo "Selenium server JAR not present. Trying to download it.\n";
-            echo "From: $downloadUrl\n";
-            echo "To:   $expectedPath\n";
-            $command =
-                    "curl -# -o " .
-                    escapeshellarg($expectedPath) . ' ' .
-                    escapeshellarg($downloadUrl);
-            echo "$command\n";
-            system($command);
-        }
-    }
-    
-    protected static function loadWebdriverBindings()
-    {
-        // Not the prettiest of PHP libraries.
-        if (!class_exists('WebDriver')) {
-            $dir = APPLICATION_PATH . '/../external/php-webdriver-bindings/phpwebdriver';
-            set_include_path(get_include_path() . PATH_SEPARATOR . $dir);
-            require_once('WebDriver.php');
-        }
+        $server = static::createSeleniumServer();
+        return new WebDriverInjectingTestDecorator($suite, $server);
     }
     
     /**
      * @return ExtendedWebDriver
      */
-    protected static function createWebDriver()
+    protected static function createSeleniumServer()
     {
-        $webdriver = new ExtendedWebDriver("localhost", "4444");
-        $webdriver->connect("firefox");
-        return $webdriver;
+        return new SeleniumServer('http://localhost:4444/wd/hub');
     }
     
     protected static function nukeDestDir()

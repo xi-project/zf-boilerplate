@@ -1,5 +1,7 @@
 <?php
 
+use \Xi\Test\Selenium\WebDriver;
+
 class AcceptanceTestCase extends TestCase
 {
     ///////////////////////////////////////
@@ -20,7 +22,7 @@ class AcceptanceTestCase extends TestCase
      * Use this function to take screenshots, automatically save them to the
      * correct place and get an <img> tag as a return value.
      */
-    public function screenshot()
+    public function screenshotImg()
     {
         $basePath = APPLICATION_PATH . '/../doc/features/screenshots';
         if (!file_exists($basePath)) {
@@ -29,17 +31,24 @@ class AcceptanceTestCase extends TestCase
         $filename = $this->getName() . '-' . $this->nextScreenshotNum . '.png';
         $path = $basePath . '/' . $filename;
         $this->nextScreenshotNum += 1;
-        $this->webdriver->getScreenshotAndSaveToFile($path);
+        $this->browser->screenshot($path);
         return '<img src="screenshots/' . $filename . '" alt="(screenshot)" class="screenshot" />';
     }
     
     public function highlight($jquerySelector)
     {
-        $this->webdriver->executeScript("$('$jquerySelector').addClass('acceptance-test-highlighted')", array());
+        $this->browser->runJavascript("$('$jquerySelector').addClass('acceptance-test-highlighted')", array());
     }
     
-    //TODO: list more. Can has traits?
+    //TODO: moar. Can has traits?
     
+    /**
+     * @return WebDriver
+     */
+    public static function typehintBrowser(WebDriver $browser)
+    {
+        return $browser;
+    }
     
     ////////////////////
     ///// Plumbing /////
@@ -51,17 +60,21 @@ class AcceptanceTestCase extends TestCase
     protected $layoutFile;
     
     /**
-     * @var ExtendedWebDriver
+     * @var \Xi\Test\Selenium\WebDriver
      */
-    protected $webdriver;
+    protected $browser;
     
-    public function __construct($srcFile, $destFile, $layoutFile, ExtendedWebDriver $webdriver)
+    public function __construct($srcFile, $destFile, $layoutFile)
                 {
         $this->srcFile = $srcFile;
         $this->destFile = $destFile;
         $this->layoutFile = $layoutFile;
-        $this->webdriver = $webdriver;
         parent::__construct(basename($srcFile, '.phtml'));
+    }
+    
+    public function setUpWebDriver(WebDriver $browser)
+    {
+        $this->browser = $browser;
     }
     
     public function count()
@@ -80,7 +93,7 @@ class AcceptanceTestCase extends TestCase
         $this->setUp();
 
         try {
-            $this->webdriver->execute('window.resizeTo(800, 600)', array());
+            $this->browser->runJavascript('window.resizeTo(800, 600)');
             
             $output = $this->runFileGetOutput($this->srcFile);
             $output = $this->wrapInLayout($output);

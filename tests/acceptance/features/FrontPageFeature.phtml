@@ -1,4 +1,4 @@
-<?php $webdriver = ExtendedWebDriver::typehint($this->webdriver); ?>
+<?php $browser = AcceptanceTestCase::typehintBrowser($this->browser); ?>
 <h1>Front page</h1>
 
 <p>
@@ -13,9 +13,9 @@
 </p>
 
 <?php
-    $webdriver->get($this->baseUrl() . '/');
-    $this->assertTrue(strpos($webdriver->getPageSource(), "acceptance testing mode") !== false);
-    echo $this->screenshot();
+    $browser->visit($this->baseUrl() . '/');
+    $this->assertTrue(strpos($browser->getPageSourceCode(), "acceptance testing mode") !== false);
+    echo $this->screenshotImg();
 ?>
 
 <p>
@@ -34,11 +34,11 @@
     $user = new \UserAccount('Jannejussiperttupietari');
     $this->em->persist($user);
     $this->em->flush();
-    $webdriver->refresh();
+    $browser->refresh();
     $this->highlight('#user-count');
     $this->highlight('#acceptance-test-mode');
-    echo $this->screenshot();
-    $this->assertTrue(strpos($webdriver->findElementBy(LocatorStrategy::cssSelector, '#user-count')->getText(), '1 user') !== false);
+    echo $this->screenshotImg();
+    $this->assertTrue(strpos($browser->findElement('#user-count')->getText(), '1 user') !== false);
 ?>
 
 <p>
