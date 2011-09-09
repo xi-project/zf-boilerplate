@@ -62,3 +62,24 @@ Acceptance tests run with APPLICATION_ENV=testing. They need a separate vhost an
 Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost
 and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini`
 (under testing).
+
+## Starting a new project
+
+    git init my-project
+    cd my-project
+    git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
+    git fetch template
+    git merge template/master
+    git submodule update --init --recursive
+
+    cp application/configs/application.example.ini application/configs/application.ini
+    # (you get sqlite by default)
+
+    scripts/doctrine.php orm:schema-tool:create
+
+    tests/selenium-server.sh  # put this in a separate console
+    tests/run.sh
+
+    git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
+    git push -u origin master
+
