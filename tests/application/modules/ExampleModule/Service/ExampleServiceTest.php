@@ -1,14 +1,12 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleServiceTest extends \TestCase
+class ExampleServiceTest extends ServiceTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $sl = \Sham::create('\ExampleModule\Service\ExampleServiceLocator');
-        $sl->getEntityManager->returns($this->em);
-        $this->service = new ExampleService($sl);
+        $this->service = new ExampleService($this->serviceLocator);
     }
     
     /**
