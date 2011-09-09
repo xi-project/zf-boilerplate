@@ -37,7 +37,7 @@ class AcceptanceTestCase extends TestCase
     
     public function highlight($element)
     {
-        $this->browser->runJavascript("$(arguments[0]).addClass('acceptance-test-highlighted')", array($element));
+        $this->browser->runJavascript("$(arguments[0]).css({outline: '4px solid red'})", array($element));
     }
     
     //TODO: moar. Can has traits?
