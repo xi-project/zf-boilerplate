@@ -13,7 +13,7 @@
 </p>
 
 <?php
-    $browser->visit($this->baseUrl() . '/');
+    $browser->visit('/');
     $this->assertTrue(strpos($browser->getPageSourceCode(), "acceptance testing mode") !== false);
     echo $this->screenshotImg();
 ?>

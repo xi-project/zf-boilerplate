@@ -75,6 +75,7 @@ class AcceptanceTestCase extends TestCase
     public function setUpWebDriver(WebDriver $browser)
     {
         $this->browser = $browser;
+        $this->browser->setBaseUrl($this->baseUrl());
     }
         
     public function tearDown()
