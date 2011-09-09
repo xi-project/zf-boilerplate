@@ -76,6 +76,12 @@ class AcceptanceTestCase extends TestCase
     {
         $this->browser = $browser;
     }
+        
+    public function tearDown()
+    {
+        $this->browser->clearCookies();
+        $this->browser->visit('about:blank');
+    }
     
     public function count()
     {
