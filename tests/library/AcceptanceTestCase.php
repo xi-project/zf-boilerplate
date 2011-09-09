@@ -35,9 +35,9 @@ class AcceptanceTestCase extends TestCase
         return '<img src="screenshots/' . $filename . '" alt="(screenshot)" class="screenshot" />';
     }
     
-    public function highlight($jquerySelector)
+    public function highlight($element)
     {
-        $this->browser->runJavascript("$('$jquerySelector').addClass('acceptance-test-highlighted')", array());
+        $this->browser->runJavascript("$(arguments[0]).addClass('acceptance-test-highlighted')", array($element));
     }
     
     //TODO: moar. Can has traits?
