@@ -32,26 +32,62 @@ The contents of **/application/modules** are organized as such:
     
 Adding more is easy; these are just the directories with some built-in purpose.
 
-## Running PHPUnit tests
+## Starting a new project
 
-You, reader, are expected to be a professional developer. Professionals make sure their code works. To be sure, you need to test it. Automated unit tests make it easier to test, enhance your design and help you make deadlines.
+    # Create the project
+    git init my-project
+    cd my-project
 
-Writing these tests is up to you, but once you have any, we've got the bare minimum laid out for you to run them. You will get a  barebones unit test bootstrap with ´/tests/bootstrap.php´. It sets up an autoloader, the include path and notches error reporting up to maximum. ´/tests/phpunit.xml´ will serve to configure your PHPUnit runs if you wish to do so (code coverage reports? Yes we can!). To run PHPUnit tests:
+    # Fetch the template
+    git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
+    git fetch template
+    git merge template/master
+
+    # Download submodules
+    git submodule update --init --recursive
+
+    # Initialize your application.ini (you'll get sqlite by default)
+    cp application/configs/application.example.ini application/configs/application.ini
+
+    # Create development and test databases
+    scripts/doctrine.php orm:schema-tool:create
+    APPLICATION_ENV=testing scripts/doctrine.php orm:schema-tool:create
+
+    # Make the databases writable by apache
+    # (assuming apache is in group 'www-data')
+    sudo chmod -R ug+rwX data
+    sudo chgrp -R www-data data
+    # Also make sure apache can read everything in your project dir
+
+    # Start Selenium server (in a separate console)
+    tests/selenium-server.sh
+
+    # Run the test suite
+    tests/run.sh
+
+    # Set up 'origin' to point to your project repo.
+    # You'll be pushing your things to 'origin', never 'template'.
+    git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
+    git push -u origin master
+
+## Running the test suite
+
+You really should test your code, and we've tried to make it as easy for you as possible.
+
+First, make sure you've got a recent (3.5.x+) version of [PHPUnit](http://phpunit.de/) installed and that the `phpunit` is on your PATH.
+
+Try running the unit-test suite
 
     cd tests
-    phpunit
+    phpunit application
 
-Wow, that was difficult. In case you don't have a `phpunit` executable in your path but _do_ have a Zend Server installation, you can instead use:
+The testing strategy encouraged by the template has application logic unit-tested as usual in `tests/application` and views, controllers and other glue code covered by integration-level tests under `tests/acceptance`. Take a look at the examples that ship with the template to see how to write both.
 
-    sh run.sh <arguments>
-
-Extra arguments will be passed on to phpunit, but you won't usually need any.
-
-Also, see https://bas.fi/how-to-test/ .
-
-## Setting up acceptance tests
+### Setting up acceptance tests
 
 Acceptance tests run with APPLICATION_ENV=testing. They need a separate vhost and a separate database. The database can be configured in `application.ini`, but the vhost must be configured manually.
+
+Add a configuration like the following to apache.
 
     <VirtualHost *:80>
         ServerName NAME-OF-PROJECT.localhost
@@ -59,27 +95,24 @@ Acceptance tests run with APPLICATION_ENV=testing. They need a separate vhost an
         SetEnv APPLICATION_ENV testing
     </VirtualHost>
 
-Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost
-and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini`
-(under testing).
+Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini` (under the `[testing]` section).
 
-## Starting a new project
+Now start the selenium server (in a separate terminal window)
 
-    git init my-project
-    cd my-project
-    git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
-    git fetch template
-    git merge template/master
-    git submodule update --init --recursive
+    tests/selenium-server.sh
 
-    cp application/configs/application.example.ini application/configs/application.ini
-    # (you get sqlite by default)
+Then run the whole test suite
 
-    scripts/doctrine.php orm:schema-tool:create
-
-    tests/selenium-server.sh  # put this in a separate console
     tests/run.sh
 
-    git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
-    git push -u origin master
+
+## Miscellaneous
+
+To merge changes in the project template with your project, do
+
+    git fetch template
+    git merge master template/master
+
+Resolve conflicts if any and mind any possible changes to `application.example.ini`.
+
 
