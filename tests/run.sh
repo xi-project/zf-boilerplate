@@ -5,7 +5,7 @@ ZEND_SERVER_PHPUNIT=/usr/local/zend/bin/phpunit
 if [ -n "$PHPUNIT" ]; then
     phpunit="$PHPUNIT"
 elif [ -n "`which phpunit`" ]; then
-    phpunit=phpunit
+    phpunit="`which phpunit`"
 elif [ -x "$ZEND_SERVER_PHPUNIT" ]; then
     phpunit="$ZEND_SERVER_PHPUNIT"
 else
