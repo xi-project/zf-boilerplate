@@ -38,7 +38,7 @@
     $this->highlight('#user-count');
     $this->highlight('#acceptance-test-mode');
     echo $this->screenshotImg();
-    $this->assertTrue(strpos($browser->findElement('#user-count')->getText(), '1 user') !== false);
+    $this->assertTrue(strpos($browser->find('#user-count')->getText(), '1 user') !== false);
 ?>
 
 <p>
