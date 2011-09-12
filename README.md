@@ -105,6 +105,7 @@ Then run the whole test suite
 
     tests/run.sh
 
+If everything goes well, then the `tests/acceptance/FrontPageFeature.phtml` test case has generated use case documentation into `doc/features/FrontPageFeature.html`. Go look at it, it's quite nice. Write your own acceptance tests similarly and you'll have a pretty good integration test suite as well as use-case documentation that one can use to follow the project's status and occasionally check for broken layouts etc.
 
 ## Miscellaneous
 
