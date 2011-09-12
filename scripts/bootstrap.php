@@ -32,6 +32,3 @@ $application = new Xi\Zend\Application\Application(
     )
 );
 $application->bootstrap();
-
-$application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, dirname(__DIR__) . '/library'), 'loadClass'));
-$application->getAutoloader()->pushAutoloader(array(new \Xi\Zend\Application\ClassLoader(null, APPLICATION_PATH . '/library'), 'loadClass'));
