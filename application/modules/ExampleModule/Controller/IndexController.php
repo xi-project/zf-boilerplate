@@ -1,13 +1,15 @@
 <?php
 namespace ExampleModule\Controller;
 
-use Xi\Zend\Mvc\ActionController\StatefulActionController;
+use Xi\Zend\Mvc\ActionController;
 
-class IndexController extends StatefulActionController
+class IndexController extends ActionController
 {
-    public function indexActionGet()
+    protected $serviceLocatorClass = 'ExampleModule\Service\ExampleServiceLocator';
+    protected $serviceClass = 'ExampleModule\Service\ExampleService';
+    
+    public function indexActionGet(\ExampleModule\Service\ExampleService $exampleService)
     {
-        $exampleService = new \ExampleModule\Service\ExampleService($this->getServiceLocator());
         $this->view->greeting = $exampleService->getGreeting();
         $this->view->userCount = $exampleService->getUserCount();
     }
