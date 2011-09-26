@@ -1,7 +1,9 @@
 <?php
 namespace ExampleModule\Controller;
 
-class ErrorController extends \Zend_Controller_Action
+use Application\Mvc\ActionController;
+
+class ErrorController extends ActionController
 {
     public function errorAction()
     {

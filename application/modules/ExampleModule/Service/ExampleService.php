@@ -1,7 +1,7 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleService extends \Service\AbstractService
+class ExampleService extends \Application\Mvc\BaseService
 {
     protected $greeting = 'Your app is now running';
     

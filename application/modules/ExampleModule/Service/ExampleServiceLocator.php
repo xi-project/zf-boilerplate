@@ -1,7 +1,7 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleServiceLocator extends \Xi\Zend\Mvc\DependencyInjection\DefaultServiceLocator
+class ExampleServiceLocator extends \Application\Mvc\BaseServiceLocator
 {
     // Add application-specific service getters here.
 }

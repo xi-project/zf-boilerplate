@@ -1,7 +1,7 @@
 <?php
 namespace ExampleModule\Controller;
 
-use Xi\Zend\Mvc\ActionController;
+use Application\Mvc\ActionController;
 
 class IndexController extends ActionController
 {
