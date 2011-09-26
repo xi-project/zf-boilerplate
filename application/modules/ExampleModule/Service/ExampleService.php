@@ -3,7 +3,7 @@ namespace ExampleModule\Service;
 
 class ExampleService extends \Service\AbstractService
 {
-    protected $greeting = 'Hello';
+    protected $greeting = 'Your app is now running';
     
     public function setGreeting($greeting)
     {
