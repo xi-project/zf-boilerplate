@@ -25,37 +25,15 @@ using Services and Presenters.
 
 In short, we've got you covered.
 
-## Directory outline
+## Getting started
 
-- **/**: README and LICENSE files
-- **/application**: project-specific application implementation
-- **/data**: project-specific generic filesystem datastorage
-- **/docs**: project documentation; design documents, class schematics etc.
-- **/external**: external dependencies that cannot be included directly in /library, eg. git submodules
-- **/library**: generic class libraries which the application relies on (eg. Zend, Doctrine, Xi components), possibly symlinked from within /external
-- **/public**: files visible to the outside; index.php, CSS and JS files, images
-- **/scripts**: build and deployment scripts, database migrations, cron jobs
-- **/tests**: unit tests, acceptance tests, test fixtures and bootstraps along with possible test output (eg. code coverage reports)
+The boilerplate is intended for programmers, and as such you're expected to know
+how to read code. The boilerplate comes with an example module that should
+showcase at least the most important points. The examples are annotated to
+clarify what is going on, and they should be sufficient to get going with all
+the major features.
 
-### Application directory structure
-
-- **/application/configs**: configuration files
-- **/application/library**: domain classes (ie. models), any project-specific libraries, non-reusable content in general
-- **/application/modules**: Zend MVC modules (controllers, services, presenters, view scripts, view helpers)
-- **/application/layouts**: Zend Layout view scripts
-
-### Module directory structure
-
-The contents of **/application/modules** are organized as such:
-
-- **<ExampleModule>**: the module root namespace. Contains an optional module-specific ´Bootstrap´.
-- **<ExampleModule>/Controller**: controller classes.
-- **<ExampleModule>/Service**: service classes.
-- **<ExampleModule>/Presenter**: presenter classes.
-- **<ExampleModule>/Model**: module-specific model implementations.
-- **<ExampleModule>/Resources**: module-specific 'static' resources such as view scripts, possibly CSS/JS files intended to be linked to /public.
-    
-Adding more is easy; these are just the directories with some built-in purpose.
+Read on for setup instructions.
 
 ## Starting a new project
 
@@ -94,6 +72,38 @@ Adding more is easy; these are just the directories with some built-in purpose.
     # You'll be pushing your things to 'origin', never 'template'.
     git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
     git push -u origin master
+
+## Directory outline
+
+- **/**: README and LICENSE files
+- **/application**: project-specific application implementation
+- **/data**: project-specific generic filesystem datastorage
+- **/docs**: project documentation; design documents, class schematics etc.
+- **/external**: external dependencies that cannot be included directly in /library, eg. git submodules
+- **/library**: generic class libraries which the application relies on (eg. Zend, Doctrine, Xi components), possibly symlinked from within /external
+- **/public**: files visible to the outside; index.php, CSS and JS files, images
+- **/scripts**: build and deployment scripts, database migrations, cron jobs
+- **/tests**: unit tests, acceptance tests, test fixtures and bootstraps along with possible test output (eg. code coverage reports)
+
+### Application directory structure
+
+- **/application/configs**: configuration files
+- **/application/library**: domain classes (ie. models), any project-specific libraries, non-reusable content in general
+- **/application/modules**: Zend MVC modules (controllers, services, presenters, view scripts, view helpers)
+- **/application/layouts**: Zend Layout view scripts
+
+### Module directory structure
+
+The contents of **/application/modules** are organized as such:
+
+- **<ExampleModule>**: the module root namespace. Contains an optional module-specific ´Bootstrap´.
+- **<ExampleModule>/Controller**: controller classes.
+- **<ExampleModule>/Service**: service classes.
+- **<ExampleModule>/Presenter**: presenter classes.
+- **<ExampleModule>/Model**: module-specific model implementations.
+- **<ExampleModule>/Resources**: module-specific 'static' resources such as view scripts, possibly CSS/JS files intended to be linked to /public.
+    
+Adding more is easy; these are just the directories with some built-in purpose.
 
 ## Running the test suite
 
