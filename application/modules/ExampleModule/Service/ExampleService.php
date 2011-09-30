@@ -3,7 +3,7 @@ namespace ExampleModule\Service;
 
 class ExampleService extends \Application\Mvc\BaseService
 {
-    protected $greeting = 'Your app is now running';
+    protected $greeting = 'Hello';
     
     public function setGreeting($greeting)
     {

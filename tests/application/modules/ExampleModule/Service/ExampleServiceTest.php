@@ -34,7 +34,7 @@ class ExampleServiceTest extends ServiceTestCase
     public function canGreetUsers()
     {
         $user = new \UserAccount('john');
-        $this->assertEquals("Hello john!", $this->service->getGreetingForUser($user));
+        $this->assertTrue(false !== strpos($this->service->getGreetingForUser($user), 'john'));
     }
     
     /**
@@ -46,7 +46,7 @@ class ExampleServiceTest extends ServiceTestCase
         $user = new \UserAccount('john');
         $this->em->persist($user);
         $this->em->flush();
-        $this->assertEquals("Hello john!", $this->service->getGreetingForUserById($user->getId()));
+        $this->assertTrue(false !== strpos($this->service->getGreetingForUserById($user->getId()), 'john'));
     }
     
     /**
