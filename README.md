@@ -1,4 +1,29 @@
-# Zend Framework project template
+# Zend Framework boilerplate
+
+## Introduction
+
+Setting up a Zend Framework installation is hard. Well, the base installation
+probably isn't, but we're not satisfied with that. Going beyond the trivial
+quickstart can be a challenge and is always a chore. This is our solution.
+
+The Zend Framework boilerplate comes prepackaged with everything you need to get
+started on your project right away, using best practices. Here's a checklist on
+what the boilerplate offers:
+
+- *PHP 5.3 namespaces.* Goes for application code as well as modules.
+- *A self-contained module structure.* Your modules can be self-contained and as
+such they have the potential to be reused. With a little help from 
+[Assetic](https://github.com/kriswallsmith/assetic), this goes for static
+resources as well. ZF modules can now resemble Symfony bundles!
+- *[Doctrine2](http://www.doctrine-project.org) support.* Nothing fancy like
+CRUD generators for now, but enough to get you going.
+- *Unit and acceptance testability.* PHPUnit and Selenium web driver setups
+included.
+- *A Controller-Service-Presenter setup.* When you dish out heavy duty code, you
+can separate your concerns better by governing access to model and view layers
+using Services and Presenters.
+
+In short, we've got you covered.
 
 ## Directory outline
 
