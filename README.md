@@ -53,8 +53,10 @@ version.
     git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
     # Get most recent updates
     git fetch template
-    # Merge from the template's master
-    git merge template/master
+    # Determine which tag to use: pick one from the list
+    git tag -l
+    # Assuming the tag you want is template-x.y.z, merge the version to the project
+    git merge template-x.y.z
 
 You'll need all the submodules that the repository depends on. You should keep
 the dependencies up-to-date, so running this after every version update can be
@@ -182,7 +184,7 @@ To merge changes in the project template with your project, pick a tagged
 revision you wish to use (`template-x.y.z` here) and do:
 
     git fetch template
-    git merge master template/template-x.y.z
+    git merge template-x.y.z
 
 Resolve conflicts if any and mind any possible changes to `application.example.ini`.
 
