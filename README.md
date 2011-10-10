@@ -170,7 +170,13 @@ Then run the whole test suite
 
 If everything goes well, then the `tests/acceptance/FrontPageFeature.phtml` test case has generated use case documentation into `doc/features/FrontPageFeature.html`. Go look at it, it's quite nice. Write your own acceptance tests similarly and you'll have a pretty good integration test suite as well as use-case documentation that one can use to follow the project's status and occasionally check for broken layouts etc.
 
-## Miscellaneous
+## Versioning notes
+
+### Tagging
+
+Tags should represent a [semantically versioned](http://semver.org/) list of known-good repository states. A `git fetch template` in a project repository will pollute the project's tags with those from the template. Due to this reason, template tags should be prefixed with `template-`, eg. `template-0.1.0`.
+
+### Upgrading the template version
 
 To merge changes in the project template with your project, pick a tagged
 revision you wish to use (`template-x.y.z` here) and do:
