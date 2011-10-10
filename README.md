@@ -37,17 +37,34 @@ Read on for setup instructions.
 
 ## Starting a new project
 
+First the standard fare initialization. You can also do a `git clone` if you
+already have a Github repository or similar.
+
     # Create the project
     git init my-project
     cd my-project
 
-    # Fetch the template
+This is important, pay attention: we're adding a non-standard remote, fetching
+it and merging the version you want to base your development on. This example
+uses the master branch, but you'll most likely want to use the most recent tag
+version.
+
+    # Add the template as a remote
     git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
+    # Get most recent updates
     git fetch template
+    # Merge from the template's master
     git merge template/master
+
+You'll need all the submodules that the repository depends on. You should keep
+the dependencies up-to-date, so running this after every version update can be
+a smart move.
 
     # Download submodules
     git submodule update --init --recursive
+
+You should have all content in place. Next, we're setting up the example
+application.
 
     # Initialize your application.ini (you'll get sqlite by default)
     cp application/configs/application.example.ini application/configs/application.ini
@@ -62,16 +79,27 @@ Read on for setup instructions.
     sudo chgrp -R www-data data
     # Also make sure apache can read everything in your project dir
 
+We'll also make sure the tests pass before doing anything much.
+
     # Start Selenium server (in a separate console)
     tests/selenium-server.sh
 
     # Run the test suite
     tests/run.sh
 
+All green? Good, let's push it. If you did the first step with `git clone`, you
+don't need to add the remote - it should already be there for you.
+
     # Set up 'origin' to point to your project repo.
     # You'll be pushing your things to 'origin', never 'template'.
     git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
+
+    # The -u flag sets up upstream tracking, associating this branch with the remote one.
     git push -u origin master
+
+Tracking essentially means you don't need to specify arguments to git pull or
+git push when working with your local branch. You can check out more tricks
+[here](http://mislav.uniqpath.com/2010/07/git-tips/).
 
 ## Directory outline
 
