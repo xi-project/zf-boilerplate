@@ -123,6 +123,14 @@ Changes in the view layer shouldn't necessitate changes in the controller layer.
 
 The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms to enforce the point of the [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
 
+## Service locators: the necessary infrastructure
+
+But wait, there's more. As said, the Service layer is a way to separate a dependency injectable structure from the Controller layer that isn't as well structured. To get at Services that have their necessary dependencies provided, a dependency management mechanism is required.
+
+**Service locators represent cohesive bundles of explicit resources** - there can be different kinds for different purposes. They're backed by [Pimple, a very simple dependency injection container](http://pimple.sensiolabs.org/) that takes care of the wiring part for populating potentially complex object graphs. Service locators take care of the *explicitness* part, providing a fully type hinted way to access resources within the container.
+
+Feel free to subclass the existing concrete service locators or create new ones to match your needs. When you do, please remember to try and partition the amount of resources provided by a single locator. You don't want god classes creeping up in your code.
+
 ## Outcomes
 
 Great. We've factored slices of the view and model from the controller and to their respective layers. As a result, our code should be **more cohesive, less coupled and more easily testable**. Have a go at it!
