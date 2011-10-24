@@ -20,8 +20,7 @@ CRUD generators for now, but enough to get you going.
 - *Unit and acceptance testability.* PHPUnit and Selenium web driver setups
 included.
 - *A Controller-Service-Presenter setup.* When you dish out heavy duty code, you
-can separate your concerns better by governing access to model and view layers
-using Services and Presenters.
+can separate your concerns better and keep your controllers skinny using Services and Presenters.
 
 In short, we've got you covered.
 
@@ -103,6 +102,44 @@ Tracking essentially means you don't need to specify arguments to git pull or
 git push when working with your local branch. You can check out more tricks
 [here](http://mislav.uniqpath.com/2010/07/git-tips/).
 
+# Useful concepts, aka. putting your controller on a diet
+
+The boilerplate is, at heart, the same Zend Framework MVC you've perhaps come to love and hate. The same concepts, therefore, mostly apply to the boilerplate as well. But the fact remains that the MVC structure we're building on stems architecturally from days of yore - which means there are a few important architectural decisions to be made. *Services and Presenters* are the result, and both are here for your convenience. You can choose to ignore them if you wish; they are add-ons to the core, not integral to the MVC's functioning.
+
+At the practical core of these additions is the [skinny controller paradigm](http://weblog.jamisbuck.org/2006/10/18/skinny-controller-fat-model). In short, it means extracting *data handling* and *content presentation* from the controller layer, leaving only decision-making behind. This discourages copy-paste and encourages [simple, succinct controllers with little dependencies](http://codebetter.com/iancooper/2008/12/03/the-fat-controller/). There's even a decent [introduction to the concept](http://survivethedeepend.com/zendframeworkbook/en/1.0/the.model) from ZF's point of view. More philosophically taken, the additions are attempts to allow programmers to more accurately reflect the SOLID and DRY design principles.
+
+Now, let's walk through what we've got in store. Before that, I'd like to note that this readme is reserved for characterization; if you're looking for code examples, they can be found in the example application.
+
+## Services: your explicit application
+
+As applications grow, controllers tend to get unwieldy. Specifically, their tentacles start reaching where they shouldn't: to the domain logic. This leads to a situation where [there is no explicit application](http://blog.firsthand.ca/2011/10/rails-is-not-your-application.html), and the Controller-Model interaction resembles a big ball of mud. Having observed this effect in many different projects, we present a simple cure: **the Controller does not directly access domain entities**, but instead talks with a Service on the Model layer.
+
+The Service layer explicitly defines the interface to your application. There is no domain manipulation, validation, queries or anything of the like going on in the Controller - they're all extracted to the Service. What's more, a Controller will only have access to *one* Service, meaning there is only one interface to the Model layer. This is a pre-emptive action against any sort of tentacle manifestations.
+
+Extracting things into the Service layer has additional benefits as well. As structures unencumbered by years of legacy, Services are much more easily integrated with Dependency Injection facilities and crafted to the creator's liking, allowing for Test Driven Development with significantly less friction than with plain controllers. Controllers are difficult to make fully injectable and testable; Services provide for a useful compromise, a flex point in the application within which everything can be built to modern standards.
+
+## Presenters: the other half
+
+With domain logic out of the way, what's left in our controller? Accepting input from the request, performing commands and queries on the Service based on the data, then displaying a view based on the result. The former are the result of our previous refactoring, so let's focus on the latter.
+
+Displaying a view consists of **a)** making a decision on what kind of view to produce - success, failure, something else? - and **b)** providing necessary data to the view layer. You don't need to be psychic to guess we find there's a problem with this. Suppose you find, within a view, that you need to show a different set of data. *Display five instead of ten most recent articles? Right.* Where do you go to make that change? If you answer "the controller", you're in violation of the single responsibility principle.
+
+Changes in the view layer shouldn't necessitate changes in the controller layer. The model layer, sure - that's where the data is supposed to come from. But the controller layer has no stake in this interaction. It's an unnecessary middleman we can do away with. *Entrant Presenters.*
+
+The controller doesn't pass anything into the view layer. Instead, as its return value it reports a state that the Presenter is free to respond to. (If there is no decision to make, the state will correspondingly be `null` - no need to do anything.) The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's exactly as you would do within a controller, but in the right place.
+
+The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms for the [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) to enforce this point do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
+
+## Outcomes
+
+Great. We've factored slices of the view and model from the controller and to their respective layers. As a result, our code should be more cohesive and more easily testable. Have a go at it!
+
+Next up, some conventions it will likely be useful to familiarize yourself with.
+
+# Working with the boilerplate
+
+The boilerplate imposes some conventions, not all of which are present in ZF. The following reference should be enough to get you going.
+
 ## Directory outline
 
 - **/**: README and LICENSE files
@@ -150,7 +187,7 @@ The testing strategy encouraged by the template has application logic unit-teste
 
 ### Setting up acceptance tests
 
-Acceptance tests run with APPLICATION_ENV=testing. They need a separate vhost and a separate database. The database can be configured in `application.ini`, but the vhost must be configured manually.
+Acceptance tests run with `APPLICATION_ENV=testing`. They need a separate vhost and a separate database. The database can be configured in `application.ini`, but the vhost must be configured manually.
 
 Add a configuration like the following to apache.
 
