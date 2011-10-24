@@ -26,11 +26,7 @@ In short, we've got you covered.
 
 ## Getting started
 
-The boilerplate is intended for programmers, and as such you're expected to know
-how to read code. The boilerplate comes with an example module that should
-showcase at least the most important points. The examples are annotated to
-clarify what is going on, and they should be sufficient to get going with all
-the major features.
+The boilerplate is intended for programmers, and as such you're expected to know how to read code. The boilerplate comes with an **example module that should showcase at least the most important points** in code. The examples are annotated to clarify what is going on, and they should be sufficient to get going with all the major features. This document is intended to detail **architectural choices and conventions** that are not most aptly described on the code level.
 
 Read on for setup instructions.
 
@@ -44,9 +40,8 @@ already have a Github repository or similar.
     cd my-project
 
 This is important, pay attention: we're adding a non-standard remote, fetching
-it and merging the version you want to base your development on. This example
-uses the master branch, but you'll most likely want to use the most recent tag
-version.
+it and merging the version you want to base your development on. You'll most
+likely want to use the most recent tag version.
 
     # Add the template as a remote
     git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
@@ -104,7 +99,7 @@ git push when working with your local branch. You can check out more tricks
 
 # Useful concepts, aka. putting your controller on a diet
 
-The boilerplate is, at heart, the same Zend Framework MVC you've perhaps come to love and hate. The same concepts, therefore, mostly apply to the boilerplate as well. But the fact remains that the MVC structure we're building on stems architecturally from days of yore - which means there are a few important architectural decisions to be made. *Services and Presenters* are the result, and both are here for your convenience. You can choose to ignore them if you wish; they are add-ons to the core, not integral to the MVC's functioning.
+The boilerplate is, at heart, the same Zend Framework MVC you've perhaps come to love and hate. The same concepts, therefore, mostly apply to the boilerplate as well. But the fact remains that the MVC structure we're building on stems architecturally from days of yore - which means there are a few important architectural decisions to be made. **Services and Presenters** are the result, and both are here for your convenience. You can choose to ignore them if you wish; they are add-ons to the core, not integral to the MVC's functioning. If you do ignore them, keep in mind that they are intended to represent our current best bets in fighting spaghetti.
 
 At the practical core of these additions is the [skinny controller paradigm](http://weblog.jamisbuck.org/2006/10/18/skinny-controller-fat-model). In short, it means extracting *data handling* and *content presentation* from the controller layer, leaving only decision-making behind. This discourages copy-paste and encourages [simple, succinct controllers with little dependencies](http://codebetter.com/iancooper/2008/12/03/the-fat-controller/). There's even a decent [introduction to the concept](http://survivethedeepend.com/zendframeworkbook/en/1.0/the.model) from ZF's point of view. More philosophically taken, the additions are attempts to allow programmers to more accurately reflect the SOLID and DRY design principles.
 
@@ -122,21 +117,21 @@ Extracting things into the Service layer has additional benefits as well. As str
 
 With domain logic out of the way, what's left in our controller? Accepting input from the request, performing commands and queries on the Service based on the data, then displaying a view based on the result. The former are the result of our previous refactoring, so let's focus on the latter.
 
-Displaying a view consists of **a)** making a decision on what kind of view to produce - success, failure, something else? - and **b)** providing necessary data to the view layer. You don't need to be psychic to guess we find there's a problem with this. Suppose you find, within a view, that you need to show a different set of data. *Display five instead of ten most recent articles? Right.* Where do you go to make that change? If you answer "the controller", you're in violation of the single responsibility principle.
+Displaying a view consists of **a) making a decision on what kind of view to produce** - success, failure, something else? - and **b) providing necessary data to the view layer**. You don't need to be psychic to guess we find there's a problem with this. Suppose you find, within a view, that you need to show a different set of data. *Display five instead of ten most recent articles? Right.* Where do you go to make that change? If you answer "the controller", you're in violation of the single responsibility principle.
 
 Changes in the view layer shouldn't necessitate changes in the controller layer. The model layer, sure - that's where the data is supposed to come from. But the controller layer has no stake in this interaction. It's an unnecessary middleman we can do away with. *Entrant Presenters.*
 
-The controller doesn't pass anything into the view layer. Instead, as its return value it reports a state that the Presenter is free to respond to. (If there is no decision to make, the state will correspondingly be `null` - no need to do anything.) The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's exactly as you would do within a controller, but in the right place.
+**The controller doesn't pass anything into the view layer.** Instead, as its return value it reports a state that the Presenter is free to respond to. (If there is no decision to make, the state will correspondingly be `null` - no need to do anything.) The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's mostly exactly as you would do within a controller, but in the right place.
 
-The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms for the [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) to enforce this point do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
+The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms to enforce the point of  [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
 
 ## Outcomes
 
-Great. We've factored slices of the view and model from the controller and to their respective layers. As a result, our code should be more cohesive and more easily testable. Have a go at it!
+Great. We've factored slices of the view and model from the controller and to their respective layers. As a result, our code should be **more cohesive, less coupled and more easily testable**. Have a go at it!
 
 Next up, some conventions it will likely be useful to familiarize yourself with.
 
-# Working with the boilerplate
+# Conventions: working with the boilerplate
 
 The boilerplate imposes some conventions, not all of which are present in ZF. The following reference should be enough to get you going.
 
