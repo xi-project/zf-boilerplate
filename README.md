@@ -24,13 +24,11 @@ can separate your concerns better and keep your controllers skinny using Service
 
 In short, we've got you covered.
 
-## Getting started
+## On this document
 
 The boilerplate is intended for programmers, and as such you're expected to know how to read code. The boilerplate comes with an **example module that should showcase at least the most important points** in code. The examples are annotated to clarify what is going on, and they should be sufficient to get going with all the major features. This document is intended to detail **architectural choices and conventions** that are not most aptly described on the code level.
 
-Read on for setup instructions.
-
-## Starting a new project
+## Setup instructions
 
 First the standard fare initialization. You can also do a `git clone` if you
 already have a Github repository or similar.
@@ -109,7 +107,7 @@ Now, let's walk through what we've got in store. Before that, I'd like to note t
 
 As applications grow, controllers tend to get unwieldy. Specifically, their tentacles start reaching where they shouldn't: to the domain logic. This leads to a situation where [there is no explicit application](http://blog.firsthand.ca/2011/10/rails-is-not-your-application.html), and the Controller-Model interaction resembles a big ball of mud. Having observed this effect in many different projects, we present a simple cure: **the Controller does not directly access domain entities**, but instead talks with a Service on the Model layer.
 
-The Service layer explicitly defines the interface to your application. There is no domain manipulation, validation, queries or anything of the like going on in the Controller - they're all extracted to the Service. What's more, a Controller will only have access to *one* Service, meaning there is only one interface to the Model layer. This is a pre-emptive action against any sort of tentacle manifestations.
+**The Service layer explicitly defines the interface to your application.** There is no domain manipulation, validation, queries or anything of the like going on in the Controller - they're all extracted to the Service. What's more, a Controller will only have access to *one* Service, meaning there is only one interface to the Model layer. This is a pre-emptive action against any sort of tentacle manifestations.
 
 Extracting things into the Service layer has additional benefits as well. As structures unencumbered by years of legacy, Services are much more easily integrated with Dependency Injection facilities and crafted to the creator's liking, allowing for Test Driven Development with significantly less friction than with plain controllers. Controllers are difficult to make fully injectable and testable; Services provide for a useful compromise, a flex point in the application within which everything can be built to modern standards.
 
@@ -123,7 +121,7 @@ Changes in the view layer shouldn't necessitate changes in the controller layer.
 
 **The controller doesn't pass anything into the view layer.** Instead, as its return value it reports a state that the Presenter is free to respond to. (If there is no decision to make, the state will correspondingly be `null` - no need to do anything.) The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's mostly exactly as you would do within a controller, but in the right place.
 
-The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms to enforce the point of  [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
+The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms to enforce the point of the [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
 
 ## Outcomes
 
