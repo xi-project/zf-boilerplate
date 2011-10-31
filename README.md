@@ -2,25 +2,15 @@
 
 ## Introduction
 
-Setting up a Zend Framework installation is hard. Well, the base installation
-probably isn't, but we're not satisfied with that. Going beyond the trivial
-quickstart can be a challenge and is always a chore. This is our solution.
+Setting up a Zend Framework installation is hard. Well, the base installation probably isn't, but we're not satisfied with that. Going beyond the trivial quickstart can be a challenge and is always a chore. This is our solution.
 
-The Zend Framework boilerplate comes prepackaged with everything you need to get
-started on your project right away, using best practices. Here's a checklist on
-what the boilerplate offers:
+The Zend Framework boilerplate comes prepackaged with everything you need to get started on your project right away, using best practices. Here's a checklist on what the boilerplate offers:
 
 - *PHP 5.3 namespaces.* Goes for application code as well as modules.
-- *A self-contained module structure.* Your modules can be self-contained and as
-such they have the potential to be reused. With a little help from 
-[Assetic](https://github.com/kriswallsmith/assetic), this goes for static
-resources as well. ZF modules can now resemble Symfony bundles!
-- *[Doctrine2](http://www.doctrine-project.org) support.* Nothing fancy like
-CRUD generators for now, but enough to get you going.
-- *Unit and acceptance testability.* PHPUnit and Selenium web driver setups
-included.
-- *A Controller-Service-Presenter setup.* When you dish out heavy duty code, you
-can separate your concerns better and keep your controllers skinny using Services and Presenters.
+- *A self-contained module structure.* Your modules can be self-contained and as such they have the potential to be reused. With a little help from [Assetic](https://github.com/kriswallsmith/assetic), this goes for static resources as well. ZF modules can now resemble Symfony bundles!
+- *[Doctrine2](http://www.doctrine-project.org) support.* Nothing fancy like CRUD generators for now, but enough to get you going.
+- *Unit and acceptance testability.* PHPUnit and Selenium web driver setups included.
+- *A Controller-Service-Presenter setup.* When you dish out heavy duty code, you can separate your concerns better and keep your controllers skinny using Services and Presenters.
 
 In short, we've got you covered.
 
@@ -30,16 +20,13 @@ The boilerplate is intended for programmers, and as such you're expected to know
 
 ## Setup instructions
 
-First the standard fare initialization. You can also do a `git clone` if you
-already have a Github repository or similar.
+First the standard fare initialization. You can also do a `git clone` if you already have a Github repository or similar.
 
     # Create the project
     git init my-project
     cd my-project
 
-This is important, pay attention: we're adding a non-standard remote, fetching
-it and merging the version you want to base your development on. You'll most
-likely want to use the most recent tag version.
+This is important, pay attention: we're adding a non-standard remote, fetching it and merging the version you want to base your development on. You'll most likely want to use the most recent tag version.
 
     # Add the template as a remote
     git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
@@ -50,15 +37,12 @@ likely want to use the most recent tag version.
     # Assuming the tag you want is template-x.y.z, merge the version to the project
     git merge template-x.y.z
 
-You'll need all the submodules that the repository depends on. You should keep
-the dependencies up-to-date, so running this after every version update can be
-a smart move.
+You'll need all the submodules that the repository depends on. You should keep the dependencies up-to-date, so running this after every version update can be a smart move.
 
     # Download submodules
     git submodule update --init --recursive
 
-You should have all content in place. Next, we're setting up the example
-application.
+You should have all content in place. Next, we're setting up the example application.
 
     # Initialize your application.ini (you'll get sqlite by default)
     cp application/configs/application.example.ini application/configs/application.ini
@@ -81,8 +65,7 @@ We'll also make sure the tests pass before doing anything much.
     # Run the test suite
     tests/run.sh
 
-All green? Good, let's push it. If you did the first step with `git clone`, you
-don't need to add the remote - it should already be there for you.
+All green? Good, let's push it. If you did the first step with `git clone`, you don't need to add the remote - it should already be there for you.
 
     # Set up 'origin' to point to your project repo.
     # You'll be pushing your things to 'origin', never 'template'.
@@ -91,9 +74,7 @@ don't need to add the remote - it should already be there for you.
     # The -u flag sets up upstream tracking, associating this branch with the remote one.
     git push -u origin master
 
-Tracking essentially means you don't need to specify arguments to git pull or
-git push when working with your local branch. You can check out more tricks
-[here](http://mislav.uniqpath.com/2010/07/git-tips/).
+Tracking essentially means you don't need to specify arguments to git pull or git push when working with your local branch. You can check out more tricks [here](http://mislav.uniqpath.com/2010/07/git-tips/).
 
 # Useful concepts, aka. putting your controller on a diet
 
@@ -218,8 +199,7 @@ Tags should represent a [semantically versioned](http://semver.org/) list of kno
 
 ### Upgrading the template version
 
-To merge changes in the project template with your project, pick a tagged
-revision you wish to use (`template-x.y.z` here) and do:
+To merge changes in the project template with your project, pick a tagged revision you wish to use (`template-x.y.z` here) and do:
 
     git fetch template
     git merge template-x.y.z
