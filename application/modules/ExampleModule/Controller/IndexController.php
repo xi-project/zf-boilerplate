@@ -9,12 +9,8 @@ class IndexController extends ActionController
 {
     // Service autodiscovery would inject this class with 
     // 'ExampleModule\Service\IndexService', but we want to declare our own.
+    // Just for sake of example - this is optional.
     protected $serviceClass = 'ExampleModule\Service\ExampleService';
-    
-    // The service depends on other services not found in the standard service
-    // locator; we need to declare a service locator class capable of providing
-    // those services.
-    protected $serviceLocatorClass = 'ExampleModule\Service\ExampleServiceLocator';
     
     // Now that our service is properly declared and functional, we will recieve
     // an instance of it as an argument to any actions called during dispatch.

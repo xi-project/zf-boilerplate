@@ -1,13 +1,34 @@
 <?php
 namespace ExampleModule\Service;
 
-class ExampleService extends \Application\Mvc\BaseService
+use ExampleModule\DependencyInjection\ExampleServiceLocator;
+
+class ExampleService extends \Application\Mvc\BaseDoctrineRepositoryService
 {
-    protected $greeting = 'Hello';
+    // Declare that we want to use a service locator other than the default.
+    // This will be picked up by the ActionControllerLocator.
+    const LOCATOR = 'ExampleModule\DependencyInjection\ExampleServiceLocator';
+    
+    protected $entityName = 'UserAccount';
+    protected $greeting;
+    
+    /**
+     * @return ExampleModule\DependencyInjection\ExampleServiceLocator
+     */
+    protected function getServiceLocator()
+    {
+        return parent::getServiceLocator();
+    }
+    
+    protected function init()
+    {
+        $this->setGreeting($this->getServiceLocator()->getDefaultGreeting());
+    }
     
     public function setGreeting($greeting)
     {
         $this->greeting = $greeting;
+        return $this;
     }
     
     public function getGreeting()
@@ -22,12 +43,12 @@ class ExampleService extends \Application\Mvc\BaseService
     
     public function getGreetingForUserById($userId)
     {
-        $user = $this->em->getRepository('UserAccount')->find($userId);
+        $user = $this->getEntityRepository()->find($userId);
         return $this->getGreetingForUser($user);
     }
     
     public function getUserCount()
     {
-        return count($this->em->getRepository('UserAccount')->findAll());
+        return count($this->getEntityRepository()->findAll());
     }
 }

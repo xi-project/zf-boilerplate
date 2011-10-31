@@ -5,6 +5,8 @@ namespace Application\Mvc;
 // helper getters. If you don't want them, you can always delete them.
 class ActionController extends \Xi\Zend\Mvc\ActionController
 {
+    protected $serviceLocatorClass = 'Application\Mvc\DependencyInjection\BaseActionControllerLocator';
+    
     /**
      * @return Zend_Controller_Action_Helper_Redirector
      */

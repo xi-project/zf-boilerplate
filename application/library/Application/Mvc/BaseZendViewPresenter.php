@@ -3,8 +3,12 @@ namespace Application\Mvc;
 
 // Contains default implementations of some convenience methods such as request/
 // response getters. If you don't want them, you can always delete them.
-class BasePresenter extends \Xi\Zend\Mvc\Presenter\ZendViewPresenter
+class BaseZendViewPresenter extends \Xi\Zend\Mvc\Presenter\ZendViewPresenter
 {
+    // Declare that we want to use a service locator other than the default.
+    // This will be picked up by the ActionControllerLocator.
+    const LOCATOR = 'Application\Mvc\DependencyInjection\BaseZendViewPresenterLocator';
+    
     /**
      * The script action name to pass to the view renderer when the action has a
      * status. First parameter is the action name, the second one is the status.
@@ -14,11 +18,27 @@ class BasePresenter extends \Xi\Zend\Mvc\Presenter\ZendViewPresenter
     protected $scriptActionFormat = "%s"; // Default: "%s/%s"
     
     /**
+     * @param DependencyInjection\BaseZendViewPresenterLocator $serviceLocator
+     */
+    public function __construct($serviceLocator)
+    {
+        parent::__construct($serviceLocator);
+    }
+    
+    /**
+     * @return DependencyInjection\BasePresenterLocator
+     */
+    public function getServiceLocator()
+    {
+        return parent::getServiceLocator();
+    }
+    
+    /**
      * @return \Zend_Controller_Response_Abstract
      */
     public function getResponse()
     {
-        return $this->getActionController()->getResponse();
+        return $this->getServiceLocator()->getResponse();
     }
     
     /**
@@ -26,7 +46,7 @@ class BasePresenter extends \Xi\Zend\Mvc\Presenter\ZendViewPresenter
      */
     public function getRequest()
     {
-        return $this->getController()->getRequest();
+        return $this->getServiceLocator()->getRequest();
     }
     
     /**
@@ -40,11 +60,11 @@ class BasePresenter extends \Xi\Zend\Mvc\Presenter\ZendViewPresenter
     }
 
     /**
-     * @return Zend_Layout|null
+     * @return Zend_Layout
      */
     public function getLayout()
     {
-        return Zend_Layout::getMvcInstance();
+        return $this->getServiceLocator()->getLayout();
     }
     
     /**
