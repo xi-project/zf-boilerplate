@@ -100,7 +100,14 @@ Displaying a view consists of **a) making a decision on what kind of view to pro
 
 Changes in the view layer shouldn't necessitate changes in the controller layer. The model layer, sure - that's where the data is supposed to come from. But the controller layer has no stake in this interaction. It's an unnecessary middleman we can do away with. *Entrant Presenters.*
 
-**The controller doesn't pass anything into the view layer.** Instead, as its return value it reports a state that the Presenter is free to respond to. (If there is no decision to make, the state will correspondingly be `null` - no need to do anything.) The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's mostly exactly as you would do within a controller, but in the right place.
+**The controller doesn't pass anything into the view layer.** Instead, as its return value it reports a state that the Presenter is free to respond to. The Presenter, given access to the Service layer, will dig up all the data necessary for displaying the chosen view and, if necessary, pass it on to a template. It's mostly exactly as you would do within a controller, but in the right place.
+
+Some examples of useful status codes, in addition to `true` for success and `false` for failure, could include:
+
+- A specific error state, such as `empty` for an empty result set
+- A process state, such as `init`/`done` for intermediate steps when eg. filling a form
+- An access level indicator, such as `partial`/`full` for whether the user can be shown complete details
+- If there is no decision to make, the state can correspondingly be `null`.
 
 The Presenter should, obviously, not order the Service to manipulate the domain in any way, but just query it. Code-level mechanisms to enforce the point of the [command-query segregation principle](http://martinfowler.com/bliki/CommandQuerySeparation.html) do not come built-in, but it's possible to facilitate in client code eg. by extracting read-only interfaces from the actual services and referring only to those in the view layer.
 
@@ -111,6 +118,14 @@ But wait, there's more. As said, the Service layer is a way to separate a depend
 **Service locators represent cohesive bundles of explicit resources** - there can be different kinds for different purposes. They're backed by [Pimple, a very simple dependency injection container](http://pimple.sensiolabs.org/) that takes care of the wiring part for populating potentially complex object graphs. Service locators take care of the *explicitness* part, providing a fully type hinted way to access resources within the container.
 
 Feel free to subclass the existing concrete service locators or create new ones to match your needs. When you do, please remember to try and partition the amount of resources provided by a single locator. You don't want god classes creeping up in your code.
+
+Some example heuristics for focusing and compartmentalizing service locators:
+
+- Different kinds of basic services. Services that handle Doctrine entities vs. services that access the file system? Different kinds of dependencies, different kinds of service locators.
+- Different service audiences. A service in an admin module may have dependencies very different from a service in a payment module.
+- Keep in mind the Single Responsibility Principle and keep the resources provided by a single locator as closely related to each other as possible.
+
+That said, as long as the resulting code is *testable*, it's probably fine.
 
 ## Outcomes
 
