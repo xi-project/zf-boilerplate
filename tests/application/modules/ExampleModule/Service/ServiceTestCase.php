@@ -18,7 +18,7 @@ abstract class ServiceTestCase extends \TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->serviceLocator = \Sham::create('\ExampleModule\Service\ExampleServiceLocator');
+        $this->serviceLocator = \Sham::create(\ExampleModule\Service\ExampleService::LOCATOR);
         $this->serviceLocator->getEntityManager->returns($this->em);
     }
 }
