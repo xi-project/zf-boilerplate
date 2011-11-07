@@ -5,7 +5,7 @@
 /application/configs/application.ini
 
 # Documentation generated from tests
-/doc/features
+/docs/features
 
 # The selenium server jar
 /external/selenium-server-*.jar

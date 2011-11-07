@@ -5,7 +5,7 @@
             <directory>application</directory>
         </testsuite>
         <testsuite name="acceptance">
-            <file>acceptance/AcceptanceTestSuite.php</file>
+            <file>library/AcceptanceTestSuite.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

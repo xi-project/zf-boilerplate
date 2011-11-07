@@ -24,10 +24,7 @@ class AcceptanceTestCase extends TestCase
      */
     public function screenshotImg()
     {
-        $basePath = APPLICATION_PATH . '/../doc/features/screenshots';
-        if (!file_exists($basePath)) {
-            mkdir($basePath);
-        }
+        $basePath = $this->getScreenshotBasePath();
         $filename = $this->getName() . '-' . $this->nextScreenshotNum . '.png';
         $path = $basePath . '/' . $filename;
         $this->nextScreenshotNum += 1;
@@ -54,7 +51,9 @@ class AcceptanceTestCase extends TestCase
     ///// Plumbing /////
     ////////////////////
     
-    
+    // In relation to destination directory
+    const SCREENSHOT_DIRECTORY = '/screenshots';
+
     protected $srcFile;
     protected $destFile;
     protected $layoutFile;
@@ -137,6 +136,15 @@ class AcceptanceTestCase extends TestCase
             'content' => $content,
             'testCaseName' => $this->getName()
         ));
+    }
+
+    protected function getScreenshotBasePath()
+    {
+        $basePath = \AcceptanceTestSuite::getDestinationDirectory() . static::SCREENSHOT_DIRECTORY;
+        if (!file_exists($basePath)) {
+            mkdir($basePath);
+        }
+        return $basePath;
     }
     
 }
