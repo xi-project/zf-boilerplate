@@ -216,7 +216,7 @@ Tags should represent a [semantically versioned](http://semver.org/) list of kno
 
 To merge changes in the project template with your project, pick a tagged revision you wish to use (`template-x.y.z` here) and do:
 
-    git fetch template
+    git fetch template --tags
     git merge template-x.y.z
 
 Resolve conflicts if any and mind any possible changes to `application.example.ini`.
