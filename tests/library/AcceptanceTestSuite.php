@@ -13,7 +13,7 @@ class AcceptanceTestSuite
     const SELENIUM_SERVER_ADDRESS = 'http://localhost:4444/wd/hub';
 
     // In relation to this directory
-    const SOURCE_DIRECTORY = '/../acceptance/features';
+    const SOURCE_DIRECTORY = '/../acceptance/';
 
     // In relation to the application path
     const DESTINATION_DIRECTORY = '/../docs/features';
