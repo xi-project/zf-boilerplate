@@ -30,14 +30,14 @@ First the standard fare initialization. You can also do a `git clone` if you alr
 
 This is important, pay attention: we're adding a non-standard remote, fetching it and merging the version you want to base your development on. You'll most likely want to use the most recent tag version.
 
-    # Add the template as a remote
-    git remote add template git@github.com:sopranobrainalliance/zend-project-template.git
+    # Add the boilerplate as a remote
+    git remote add boilerplate git@github.com:xi-project/zf-boilerplate.git
     # Get most recent updates
-    git fetch template
+    git fetch boilerplate
     # Determine which tag to use: pick one from the list
     git tag -l
-    # Assuming the tag you want is template-x.y.z, merge the version to the project
-    git merge template-x.y.z
+    # Assuming the tag you want is boilerplate-x.y.z, merge the version to the project
+    git merge boilerplate-x.y.z
 
 You'll need all the submodules that the repository depends on. You should keep the dependencies up-to-date, so running this after every version update can be a smart move.
 
@@ -74,7 +74,7 @@ Try running the unit-test suite
     cd tests
     phpunit application
 
-The testing strategy encouraged by the template has application logic unit-tested as usual in `tests/application` and views, controllers and other glue code covered by integration-level tests under `tests/acceptance`. Take a look at the examples that ship with the template to see how to write both.
+The testing strategy encouraged by the boilerplate has application logic unit-tested as usual in `tests/application` and views, controllers and other glue code covered by integration-level tests under `tests/acceptance`. Take a look at the examples that ship with the boilerplate to see how to write both.
 
 #### Selenium
 
@@ -105,7 +105,7 @@ If everything goes well, then the `tests/acceptance/FrontPageFeature.phtml` test
 Tests show all green? Good, let's push it. If you did the first step with `git clone`, you don't need to add the remote - it should already be there for you.
 
     # Set up 'origin' to point to your project repo.
-    # You'll be pushing your things to 'origin', never 'template'.
+    # You'll be pushing your things to 'origin', never 'boilerplate'.
     git remote add origin $GITHUB_URL_OF_YOUR_PROJECT
 
     # The -u flag sets up upstream tracking, associating this branch with the remote one.
@@ -210,14 +210,14 @@ Adding more is easy; these are just the directories with some built-in purpose.
 
 ### Tagging
 
-Tags should represent a [semantically versioned](http://semver.org/) list of known-good repository states. A `git fetch template` in a project repository will pollute the project's tags with those from the template. Due to this reason, template tags should be prefixed with `template-`, eg. `template-0.1.0`.
+Tags should represent a [semantically versioned](http://semver.org/) list of known-good repository states. A `git fetch boilerplate` in a project repository will pollute the project's tags with those from the boilerplate. Due to this reason, boilerplate tags should be prefixed with `boilerplate-`, eg. `boilerplate-0.1.0`.
 
-### Upgrading the template version
+### Upgrading the boilerplate version
 
-To merge changes in the project template with your project, pick a tagged revision you wish to use (`template-x.y.z` here) and do:
+To merge changes in the boilerplate with your project, pick a tagged revision you wish to use (`boilerplate-x.y.z` here) and do:
 
-    git fetch template --tags
-    git merge template-x.y.z
+    git fetch boilerplate --tags
+    git merge boilerplate-x.y.z
 
 Resolve conflicts if any and mind any possible changes to `application.example.ini`.
 
