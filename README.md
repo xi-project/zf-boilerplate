@@ -57,6 +57,11 @@ You should have all content in place. Next, we're setting up the example applica
     # (assuming apache is in group 'www-data')
     sudo chmod -R ug+rwX data
     sudo chgrp -R www-data data
+    
+    # Make public/img writable by apache
+    sudo chmod -R ug+rwX public/img
+    sudo chgrp -R daemon public/img
+    
     # Also make sure apache can read everything in your project dir
 
 The application should now be up and running on your local server. Next up, tests and the test environment.
