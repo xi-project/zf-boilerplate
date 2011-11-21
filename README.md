@@ -54,13 +54,14 @@ You should have all content in place. Next, we're setting up the example applica
     env APPLICATION_ENV=testing scripts/doctrine.php orm:schema-tool:create
 
     # Make the databases writable by apache
-    # (assuming apache is in group 'www-data')
+    # (Assuming apache is in group 'www-data'. In Zend Server Mac OS X this is 'daemon'.)
     sudo chmod -R ug+rwX data
     sudo chgrp -R www-data data
     
     # Make public/img writable by apache
+    # (Again assuming apache is in group 'www-data')
     sudo chmod -R ug+rwX public/img
-    sudo chgrp -R daemon public/img
+    sudo chgrp -R www-data public/img
     
     # Also make sure apache can read everything in your project dir
 
