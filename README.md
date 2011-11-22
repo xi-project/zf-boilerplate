@@ -86,7 +86,7 @@ The testing strategy encouraged by the boilerplate has application logic unit-te
 
 Acceptance tests run with `APPLICATION_ENV=testing`. They need a separate vhost and a separate database. The database can be configured in `application.ini`, but the vhost must be configured manually.
 
-Add a configuration like the following to Apache. (Eg. `/usr/local/zend/apache2/conf/extra/httpd-vhosts.conf` on Zend Server.)
+Add a configuration like the following to Apache. (Eg. `/usr/local/zend/apache2/conf/extra/httpd-vhosts.conf` on Zend Server. Note that the default port on Zend Server is 10088.)
 
     <VirtualHost *:80>
         ServerName NAME-OF-PROJECT.localhost
@@ -94,7 +94,7 @@ Add a configuration like the following to Apache. (Eg. `/usr/local/zend/apache2/
         SetEnv APPLICATION_ENV testing
     </VirtualHost>
 
-Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini` (under the `[testing]` section).
+Also, add `NAME-OF-PROJECT.localhost` to your hosts file to redirect to localhost and set `acceptanceTestingBaseUrl=http://NAME-OF-PROJECT.localhost` in `application.ini` (under the `[testing]` section). Remember to also specify the port, if you're not using the default (80).
 
 Now start the selenium server (in a separate terminal window)
 
