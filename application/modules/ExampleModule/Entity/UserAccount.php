@@ -1,5 +1,7 @@
 <?php
 
+namespace ExampleModule\Entity;
+
 /**
  * @Entity
  */
@@ -11,15 +13,15 @@ class UserAccount
      * @Column(type="integer")
      */
     protected $id;
-    
+
     /** @Column */
     protected $username;
-    
+
     public function __construct($username)
     {
         $this->username = $username;
     }
-    
+
     public function getId()
     {
         return $this->id;

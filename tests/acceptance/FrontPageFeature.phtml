@@ -31,7 +31,7 @@
 </p>
 
 <?php
-    $user = new \UserAccount('Jannejussiperttupietari');
+    $user = new \ExampleModule\Entity\UserAccount('Jannejussiperttupietari');
     $this->em->persist($user);
     $this->em->flush();
     $browser->refresh();

@@ -1,7 +1,8 @@
 <?php
 namespace ExampleModule\Service;
 
-use ExampleModule\DependencyInjection\ExampleServiceLocator;
+use ExampleModule\DependencyInjection\ExampleServiceLocator,
+    ExampleModule\Entity\UserAccount;
 
 class ExampleService extends \Application\Mvc\BaseDoctrineRepositoryService
 {
@@ -9,7 +10,7 @@ class ExampleService extends \Application\Mvc\BaseDoctrineRepositoryService
     // This will be picked up by the ActionControllerLocator.
     const LOCATOR = 'ExampleModule\DependencyInjection\ExampleServiceLocator';
     
-    protected $entityName = 'UserAccount';
+    protected $entityName = 'ExampleModule\Entity\UserAccount';
     protected $greeting;
     
     /**
@@ -36,7 +37,7 @@ class ExampleService extends \Application\Mvc\BaseDoctrineRepositoryService
         return $this->greeting . '!';
     }
     
-    public function getGreetingForUser(\UserAccount $user)
+    public function getGreetingForUser(UserAccount $user)
     {
         return $this->greeting . ' ' . $user->getUsername() . '!';
     }
