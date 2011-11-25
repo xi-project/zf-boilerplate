@@ -1,5 +1,8 @@
 <?php
+
 namespace ExampleModule\Service;
+
+use ExampleModule\Entity\UserAccount;
 
 class ExampleServiceTest extends ServiceTestCase
 {
@@ -33,7 +36,7 @@ class ExampleServiceTest extends ServiceTestCase
      */
     public function canGreetUsers()
     {
-        $user = new \UserAccount('john');
+        $user = new UserAccount('john');
         $this->assertTrue(false !== strpos($this->service->getGreetingForUser($user), 'john'));
     }
     
@@ -43,7 +46,7 @@ class ExampleServiceTest extends ServiceTestCase
     public function canGreetUsersById()
     {
         // Testing that Doctrine works
-        $user = new \UserAccount('john');
+        $user = new UserAccount('john');
         $this->em->persist($user);
         $this->em->flush();
         $this->assertTrue(false !== strpos($this->service->getGreetingForUserById($user->getId()), 'john'));
@@ -54,9 +57,9 @@ class ExampleServiceTest extends ServiceTestCase
      */
     public function canCountUsersInDatabase()
     {
-        $this->em->persist(new \UserAccount('john'));
-        $this->em->persist(new \UserAccount('jill'));
-        $this->em->persist(new \UserAccount('jack'));
+        $this->em->persist(new UserAccount('john'));
+        $this->em->persist(new UserAccount('jill'));
+        $this->em->persist(new UserAccount('jack'));
         $this->em->flush();
         $this->assertEquals(3, $this->service->getUserCount());
     }
